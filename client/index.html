@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="nbind.js"></script>
+</head>
+<body>
+    <script>
+        nbind.init(function(err, binding) {
+            let lib = binding.lib;
+            let cb = function (str) {
+                lib.client.on_message(str, str.length)
+            }
+
+            let sock = new WebSocket('ws://localhost:8080', ['binary'])
+            let reader = new FileReader()
+
+            reader.addEventListener("loadend", function() {
+                cb(reader.result)
+            });
+
+            sock.onmessage = function (msg) {
+                reader.readAsBinaryString(msg.data)
+            }
+
+            sock.onopen = function () {
+                sock.send('foobar')
+            }
+        });
+    </script>
+</body>
+</html>
