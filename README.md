@@ -20,6 +20,8 @@ Commands are assumed to be run from repo root
     * open debug console
     * you should see output
 
-      `string: foobar`
+      `sending message: foobar`
 
-      `string size: 6`
+      `got message: foobar`
+
+      `message size: 6`
